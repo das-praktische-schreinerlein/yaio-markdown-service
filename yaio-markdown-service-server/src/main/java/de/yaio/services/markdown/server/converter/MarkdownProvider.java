@@ -11,7 +11,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.services.markdown.converter;
+package de.yaio.services.markdown.server.converter;
 
 import de.yaio.commons.converter.YmfMarkdownProvider;
 import org.pegdown.JshConfig;

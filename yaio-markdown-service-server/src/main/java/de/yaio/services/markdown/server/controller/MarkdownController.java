@@ -11,9 +11,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.services.markdown.controller;
+package de.yaio.services.markdown.server.controller;
 
-import de.yaio.services.markdown.converter.MarkdownProvider;
+import de.yaio.services.markdown.server.converter.MarkdownProvider;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
