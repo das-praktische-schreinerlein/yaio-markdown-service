@@ -21,7 +21,6 @@
         <url>http://www.your-all-in-one.de</url>
     </organization>
 
-    <!-- packaging jar or war and version -->
     <packaging>pom</packaging>
 
     <modules>
