@@ -11,19 +11,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package de.yaio.services.markdown;
+package de.yaio.services.markdown.server;
 
+import de.yaio.services.markdown.server.configuration.MarkdownServerConfig;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
 /** 
  * the markdown-service as spring boot application
  */
-@Configuration
-@EnableAutoConfiguration
-@ComponentScan("de.yaio.services.markdown")
 public class MarkdownApplication {
 
     /** 
@@ -31,6 +26,6 @@ public class MarkdownApplication {
      * @param args                   the command line arguments
      */
     public static void main(String[] args) {
-        SpringApplication.run(MarkdownApplication.class, args);
+        SpringApplication.run(MarkdownServerConfig.class, args);
     }
 }

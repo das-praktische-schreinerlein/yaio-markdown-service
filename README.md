@@ -11,22 +11,10 @@ and running with spring-boot as standalone service.
 - test it
 
         mvn install
-        mvn spring-boot:run
+        java -Xmx768m -Xms128m -Dspring.config.location=file:config/markdown-application.properties -Dlog4j.configuration=file:config/log4j.properties -cp "dist/yaio-markdown-service-full.jar" de.yaio.services.markdown.server.MarkdownApplication --config config/markdown-application.properties
         curl --user markdown:secret -X GET http://localhost:8089/services/markdown/markdown2html -s --data 'src=# Ue1\n und text'
         or 
         firefox http://markdown:secret@localhost:8089/
-
-- to build it as standalone-jar with all dependencies take a look at pom.xml
-
-        <!-- packaging - change it with "mvn package -Dpackaging.type=jar" -->
-        <packaging.type>jar</packaging.type>
-        <!-- assembly a jar with all dependencies - activate it with "mvn package -Dpackaging.assembly-phase=package" -->
-        <packaging.assembly-phase>none</packaging.assembly-phase>
-        <!-- shade to an ueber-jar - activate it with "mvn package -Dpackaging.shade-phase=package" -->
-        <packaging.shade-phase>none</packaging.shade-phase>
-        <!-- prepare for springboot - activate it with "mvn package -Dpackaging.springboot-phase=package" -->
-        <packaging.springboot-phase>none</packaging.springboot-phase>
-
 
 # Thanks to
 - **Build-Tools**
