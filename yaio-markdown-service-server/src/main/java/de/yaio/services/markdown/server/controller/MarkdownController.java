@@ -17,13 +17,16 @@ import de.yaio.services.markdown.server.converter.MarkdownProvider;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
 
 
 /** 
@@ -49,12 +52,42 @@ public class MarkdownController {
                     produces = "text/html")
     public @ResponseBody void convertToHtml(@RequestParam("src") final String src,
                                            HttpServletResponse response) throws IOException {
+        response.getWriter().append(converterUtils.convertMarkdownToHtml(src));
+    }
+
+    @ExceptionHandler(value = {Exception.class, RuntimeException.class, IOException.class})
+    public void handleAllException(final HttpServletRequest request, final Exception e,
+                                   final HttpServletResponse response) {
+        LOGGER.info("Exception while running request:" + createRequestLogMessage(request), e);
+        response.setStatus(SC_INTERNAL_SERVER_ERROR);
         try {
-            response.getWriter().append(converterUtils.convertMarkdownToHtml(src));
-        } catch (Exception e) {
-            LOGGER.warn("exception start for src:" + src, e);
-            response.setStatus(404);
-            response.getWriter().append("error while reading:" + e.getMessage());
+            response.getWriter().append("exception while converting markdown");
+        } catch (IOException ex) {
+            LOGGER.warn("exception while exceptionhandling", ex);
         }
+    }
+
+    protected String createRequestLogMessage(HttpServletRequest request) {
+        return new StringBuilder("REST Request - ")
+                .append("[HTTP METHOD:")
+                .append(request.getMethod())
+                .append("] [URL:")
+                .append(request.getRequestURL())
+                .append("] [REQUEST PARAMETERS:")
+                .append(getRequestMap(request))
+                .append("] [REMOTE ADDRESS:")
+                .append(request.getRemoteAddr())
+                .append("]").toString();
+    }
+
+    private Map<String, String> getRequestMap(HttpServletRequest request) {
+        Map<String, String> typesafeRequestMap = new HashMap<>();
+        Enumeration<?> requestParamNames = request.getParameterNames();
+        while (requestParamNames.hasMoreElements()) {
+            String requestParamName = (String)requestParamNames.nextElement();
+            String requestParamValue = request.getParameter(requestParamName);
+            typesafeRequestMap.put(requestParamName, requestParamValue);
+        }
+        return typesafeRequestMap;
     }
 }

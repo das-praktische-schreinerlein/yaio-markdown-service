@@ -24,6 +24,11 @@
     <packaging>${packaging.type}</packaging>
 
     <dependencies>
+        <dependency>
+            <groupId>de.yaio</groupId>
+            <artifactId>yaio-commons</artifactId>
+            <version>${yaio-commons.version}</version>
+        </dependency>
         <!-- markdown -->
         <dependency>
             <groupId>de.yaio.converter</groupId>

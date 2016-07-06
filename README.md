@@ -12,7 +12,7 @@ and running with spring-boot as standalone service.
 
         mvn install
         java -Xmx768m -Xms128m -Dspring.config.location=file:config/markdown-application.properties -Dlog4j.configuration=file:config/log4j.properties -cp "dist/yaio-markdown-service-full.jar" de.yaio.services.markdown.server.MarkdownApplication --config config/markdown-application.properties
-        curl --user markdown:secret -X GET http://localhost:8089/services/markdown/markdown2html -s --data 'src=# Ue1\n und text'
+        curl --user markdown:secret -X POST http://localhost:8089/services/markdown/markdown2html -s --data 'src=# Ue1\n und text'
         or 
         firefox http://markdown:secret@localhost:8089/
 
