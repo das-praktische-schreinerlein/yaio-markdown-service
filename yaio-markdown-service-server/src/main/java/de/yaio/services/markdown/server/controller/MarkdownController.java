@@ -26,6 +26,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
 
 
@@ -55,7 +56,19 @@ public class MarkdownController {
         response.getWriter().append(converterUtils.convertMarkdownToHtml(src));
     }
 
-    @ExceptionHandler(value = {Exception.class, RuntimeException.class, IOException.class})
+    @ExceptionHandler(value = {IOException.class})
+    public void handleCustomException(final HttpServletRequest request, final Exception e,
+                                   final HttpServletResponse response) {
+        LOGGER.info("IOException while running request:" + createRequestLogMessage(request), e);
+        response.setStatus(SC_BAD_REQUEST);
+        try {
+            response.getWriter().append("exception while converting markdown");
+        } catch (IOException ex) {
+            LOGGER.warn("exception while exceptionhandling", ex);
+        }
+    }
+
+    @ExceptionHandler(value = {Exception.class, RuntimeException.class})
     public void handleAllException(final HttpServletRequest request, final Exception e,
                                    final HttpServletResponse response) {
         LOGGER.info("Exception while running request:" + createRequestLogMessage(request), e);
