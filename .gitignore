@@ -4,3 +4,4 @@
 *.iml
 dependency-reduced-pom.xml
 /dist/
+*pom.xml.versionsBackup
