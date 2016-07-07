@@ -12,7 +12,7 @@
     <!-- the base -->
     <groupId>de.yaio.services</groupId>
     <artifactId>yaio-markdown-service</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0</version>
     <name>Yaio-Markdown-service</name>
     <description>YourAllInOne Markdown-Service</description>
     <url>https://github.com/das-praktische-schreinerlein/yaio-markdown-service</url>
